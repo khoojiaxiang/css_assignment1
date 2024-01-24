@@ -160,7 +160,7 @@ const MapComponent = () => {
                     </div>
                   </Popup>
                 </Marker>)
-                (<marker ></marker>)
+                
               );
             } else {
               return null;

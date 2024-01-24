@@ -80,7 +80,12 @@ const MapComponent = () => {
   const next4Days = getNext4Days();
 
   const createCustomArrowIcon = (direction, windSpeed) => {
-    const animationDuration = 5/windSpeed;
+    // Set a minimum animation duration to avoid very slow or static arrows
+    const minAnimationDuration = 2; // seconds
+  
+    // Calculate animation duration based on wind speed (assuming windSpeed is in m/s)
+    const animationDuration = windSpeed !== null ? Math.max(5 / windSpeed, minAnimationDuration) : minAnimationDuration;
+  
     return L.divIcon({
       html: `
         <div class="arrow-1" style="transform: rotate(${direction}deg);"></div>
@@ -101,7 +106,6 @@ const MapComponent = () => {
             animation: a1 ${animationDuration}s infinite linear;
             padding: 15px;
             margin: 60px;
-            
           }
           @keyframes a1 {
             90%,100%{flex-grow: 1}
@@ -111,6 +115,7 @@ const MapComponent = () => {
       className: 'custom-arrow-icon',
     });
   };
+  
 
   const getWindDirectionText = (angle) => {
     const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
